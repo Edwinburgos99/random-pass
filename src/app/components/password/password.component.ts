@@ -7,36 +7,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PasswordComponent implements OnInit {
 
-  length: any;
-  useUpperCase: any;
-  useSpecialCharacters: any;
-  password: any;
-  showCopied = false;
+  length: number = 15;
+  useUpperCase: boolean = false;
+  useSpecialCharacters: boolean = false;
+  password: string = "";
+  showCopied: boolean = false;
+  lowerCaseChars: string = "abcdefghijklmnopqrstuvwxyz";
+  upperCaseChars: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  specialChars: string = "!@#$%^&*_-,.";
+  charSet: string = this.lowerCaseChars;
 
   ngOnInit() {
-    this.password = "";
-    this.length = 15;
-    this.showCopied = false;
   }
   generatePassword() {
-    const lowerCaseChars = "abcdefghijklmnopqrstuvwxyz";
-    const upperCaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const specialChars = "!@#$%^&*_-,.";
-    let password = "";
-    let charSet = lowerCaseChars;
 
     if (this.useUpperCase) {
-      charSet += upperCaseChars;
+      this.charSet += this.upperCaseChars;
     }
     if (this.useSpecialCharacters) {
-      charSet += specialChars;
+      this.charSet += this.specialChars;
     }
 
     for (let i = 0; i < this.length; i++) {
-      password += charSet.charAt(Math.floor(Math.random() * charSet.length));
+      this.password += this.charSet.charAt(Math.floor(Math.random() * this.charSet.length));
     }
-
-    this.password = password;
   }
 
   copyPassword() {
@@ -44,7 +38,7 @@ export class PasswordComponent implements OnInit {
     this.showCopied = true;
     setTimeout(() => {
       this.showCopied = false;
-    }, 500);
+    }, 1000);
   }
 
 
